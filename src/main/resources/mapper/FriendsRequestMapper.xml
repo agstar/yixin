@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imooc.yixin.mapper.FriendsRequestMapper">
+    <resultMap id="BaseResultMap" type="com.imooc.yixin.pojo.FriendsRequest">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="send_user_id" jdbcType="VARCHAR" property="sendUserId"/>
+        <result column="accept_user_id" jdbcType="VARCHAR" property="acceptUserId"/>
+        <result column="request_date_time" jdbcType="TIMESTAMP" property="requestDateTime"/>
+    </resultMap>
+
+    <select id="selectFriend" parameterType="string" resultType="com.imooc.yixin.pojo.vo.FriendRequestVO">
+        select fr.send_user_id as sendUserId ,
+                u.username as sendUsername,
+                 u.face_image as sendFaceImage,
+                 u.nickname as sendNickname
+        from friends_request fr left join  users u
+        on fr.send_user_id=u.id
+        where fr.accept_user_id=#{myUserId}
+    </select>
+
+</mapper>
